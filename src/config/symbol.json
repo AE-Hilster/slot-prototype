@@ -1,0 +1,13 @@
+{
+    "symbolFiles":
+    [
+        "10.jpg",
+        "jack.jpg",
+        "queen.jpg",
+        "king.jpg",
+        "ace.jpg",
+        "wild.jpg"
+    ],
+    "symbolWidth": 250,
+    "symbolHeight": 250
+}
