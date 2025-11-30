@@ -1,18 +1,20 @@
 import * as PIXI from "pixi.js";
-import SymbolConfig from "../config/symbol.json";
+import { gsap } from "gsap";
+import SymbolConfig from "../../config/symbol.json";
+import { gameComponents } from "../GameComponents";
 
 export class Symbol
 {
     private sprite!: PIXI.Sprite;
 
-    constructor(x: number, y: number, texture: PIXI.Texture, app: PIXI.Application<PIXI.Renderer>)
+    constructor(x: number, y: number, texture: PIXI.Texture)
     {
         this.sprite = new PIXI.Sprite(texture);
         this.sprite.anchor.set(0.5);
         this.sprite.width = SymbolConfig.symbolWidth;
         this.sprite.height = SymbolConfig.symbolHeight;
 
-        app.stage.addChild(this.sprite);
+        gameComponents.app.stage.addChild(this.sprite);
         
         this.setPosition(x, y);
     }
@@ -31,5 +33,10 @@ export class Symbol
     setMask(mask: PIXI.Graphics): void
     {
         this.sprite.mask = mask;
+    }
+
+    tint(colour: number): void
+    {
+        gsap.to(this.sprite, { pixi: { tint: colour }, duration: 0.25 });
     }
 }

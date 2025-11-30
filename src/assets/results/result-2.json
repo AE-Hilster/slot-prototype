@@ -1,0 +1,29 @@
+{
+  "grid": [
+    [ 3, 0, 1],
+    [ 0, 3, 2],
+    [ 1, 0, 3]
+  ],
+  "winlines": [
+    {
+      "payout": 300,
+      "positions": [
+        {
+          "column": 0,
+          "row": 0,
+          "symbolID": 3
+        },
+        { 
+          "column": 1,
+          "row": 1,
+          "symbolID": 3
+        },
+        {
+          "column": 2,
+          "row": 2,
+          "symbolID": 3
+        }
+      ]
+    }
+  ]
+}

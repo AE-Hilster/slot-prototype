@@ -1,0 +1,49 @@
+{
+  "grid": [
+    [ 3, 0, 5],
+    [ 0, 1, 0],
+    [ 2, 0, 4]
+  ],
+  "winlines": [
+    {
+      "payout": 50,
+      "positions": [
+        {
+          "column": 0,
+          "row": 1,
+          "symbolID": 0
+        },
+        { 
+          "column": 1,
+          "row": 0,
+          "symbolID": 0
+        },
+        {
+          "column": 2,
+          "row": 1,
+          "symbolID": 0
+        }
+      ]
+    },
+    {
+      "payout": 50,
+      "positions": [
+        {
+          "column": 0,
+          "row": 1,
+          "symbolID": 0
+        },
+        { 
+          "column": 1,
+          "row": 2,
+          "symbolID": 0
+        },
+        {
+          "column": 2,
+          "row": 1,
+          "symbolID": 0
+        }
+      ]
+    }
+  ]
+}

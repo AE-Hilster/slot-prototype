@@ -1,5 +1,9 @@
 import * as PIXI from "pixi.js";
 
+/**
+ * Texture manager
+ * Provides centralized loading and access to textures
+ */
 export class Textures
 {
     private textures: PIXI.Texture[] = [];

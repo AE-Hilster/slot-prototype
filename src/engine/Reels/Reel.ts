@@ -1,7 +1,8 @@
 import * as PIXI from "pixi.js";
 import { Symbol } from "./Symbol";
-import { Textures } from "./Textures";
-import SymbolConfig from "../config/symbol.json";
+import { Textures } from "../Textures";
+import SymbolConfig from "../../config/symbol.json";
+import { gameComponents } from "../GameComponents";
 
 export class Reel
 {
@@ -19,7 +20,9 @@ export class Reel
 
     private textures!: Textures;
 
-    constructor(reel: number, reelLength: number, textures: Textures, app: PIXI.Application<PIXI.Renderer>)
+    private result: number[] = [];
+
+    constructor(reel: number, reelLength: number, textures: Textures)
     {
         this.reelIndex = reel;
         this.textures = textures;
@@ -27,11 +30,11 @@ export class Reel
         this.mask = new PIXI.Graphics();
         this.mask.rect(reel * SymbolConfig.symbolWidth, SymbolConfig.symbolHeight, SymbolConfig.symbolWidth, SymbolConfig.symbolHeight * reelLength)
             .fill(0xFFFFFF);
-        app.stage.addChild(this.mask);
+        gameComponents.app.stage.addChild(this.mask);
 
         for (let y = 0; y <= reelLength; ++y)
         {
-            const symbol = new Symbol(reel, y, textures.getTexture(Math.floor(Math.random() * SymbolConfig.symbolFiles.length)), app);
+            const symbol = new Symbol(reel, y, textures.getTexture(Math.floor(Math.random() * SymbolConfig.symbolFiles.length)));
             symbol.setMask(this.mask);
             this.symbols.push(symbol);
         }
@@ -41,8 +44,9 @@ export class Reel
     {
         if (this.spinning)
         {
-            const continueSpin = this.landTimer > 0;
-            if (continueSpin)
+            const landResult = this.landTimer <= 0;
+            const continueSpin = this.result.length > 0;
+            if (!landResult)
             {
                 this.landTimer -= delta;
             }
@@ -62,7 +66,8 @@ export class Reel
                 }
 
                 const resetSymbol = this.symbols.pop()!
-                resetSymbol.setTexture(this.textures.getTexture(Math.floor(Math.random() * SymbolConfig.symbolFiles.length)));
+                const newSymbolIndex = landResult && this.result.length > 0 ? this.result.pop()! : Math.floor(Math.random() * SymbolConfig.symbolFiles.length);
+                resetSymbol.setTexture(this.textures.getTexture(newSymbolIndex));
                 this.symbols.unshift(resetSymbol);
             }
 
@@ -73,9 +78,33 @@ export class Reel
         }
     }
 
-    spin(): void
+    spin(result: number[]): void
     {
         this.spinning = true;
         this.landTimer = this.landDelay;
+        this.result = result;
+    }
+
+    showWin(row: number): void
+    {
+        for (let y = 0; y < this.symbols.length; ++y)
+        {
+            if (y === row + 1)
+            {
+                this.symbols[y].tint(0xFFFFFF);
+            }
+            else
+            {
+                this.symbols[y].tint(0x555555);
+            }
+        }
+    }
+
+    resetSymbols(): void
+    {
+        for (const symbol of this.symbols)
+        {
+            symbol.tint(0xFFFFFF);
+        }
     }
 }
