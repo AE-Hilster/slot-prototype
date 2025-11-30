@@ -102,6 +102,7 @@ function update(deltaTime: number): void
 
     const reels = new Reels(ReelsConfig.columns, ReelsConfig.rows, textures);
     gameComponents.setReels(reels);
+    reels.addChild(winLineText);
 
     const spinButton = new Button(await PIXI.Assets.load("assets/sprites/spin-button.png"));
     gameComponents.setSpinButton(spinButton);

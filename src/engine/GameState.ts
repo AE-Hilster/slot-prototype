@@ -45,7 +45,7 @@ export function changeGameState(newState: GameState): void
             {
                 case GameState.SHOWING_WINS:
                 case GameState.IDLE:
-                    spinButton.visible(true);
+                    spinButton.setVisible(true);
                     break;
                 default:
                     return;
@@ -77,7 +77,7 @@ function spinReels(): void
 
     gameComponents.setRandomActiveResult();
     reels.spin(convertResultGridToReelGrids(results[gameComponents.activeResult].grid));
-    spinButton.visible(false);
+    spinButton.setVisible(false);
     gameComponents.winIndex = -1;
 }
 

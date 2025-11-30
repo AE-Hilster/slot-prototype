@@ -1,17 +1,15 @@
-import { Application, Renderer, Text } from "pixi.js";
+import { Text } from "pixi.js";
 import { gsap } from "gsap";
 import { WinLine } from "../Data/WinLine";
 import SymbolConfig from "../../config/symbol.json";
 import ReelsConfig from "../../config/reels.json";
 import { gameComponents } from "../GameComponents";
 
-export class WinLineText
+export class WinLineText extends Text
 {
-    private text!: Text;
     constructor()
     {
-        const x = ReelsConfig.columns * SymbolConfig.symbolWidth / 2;
-        this.text = new Text({
+        super({
             text: '',
             style: {
                 fontFamily: 'Arial',
@@ -20,26 +18,26 @@ export class WinLineText
                 stroke: { color: '#000000', width: 6}
             },
             zIndex: 1,
-            x: x,
+            x: 0,
             y: 0,
             anchor: { x: 0.5, y: 0.5 },
-          });
-          gameComponents.app.stage.addChild(this.text);
+        });
 
-          this.hide();
+        gameComponents.app.stage.addChild(this);
+        this.hide();
     }
 
     hide(): void
     {
-        this.text.visible = false;
+        this.visible = false;
     }
 
     show(winline: WinLine): void
     {
-        this.text.text = winline.payout.toString();
-        this.text.y = this.getYPosition(winline);
-        this.text.visible = true;
-        gsap.to(this.text.scale, { x: 1.2, y: 1.2, duration: ReelsConfig.winLength / 2, yoyo: true, repeat: 1 });
+        this.text = winline.payout.toString();
+        this.y = this.getYPosition(winline);
+        this.visible = true;
+        gsap.to(this.scale, { x: 1.2, y: 1.2, duration: ReelsConfig.winLength / 2, yoyo: true, repeat: 1 });
     }
 
     private getYPosition(winLine: WinLine): number
@@ -53,7 +51,12 @@ export class WinLineText
             if (pos.row > highestRow)
                 highestRow = pos.row;
         }
-        const middleRow = (lowestRow + highestRow) / 2;
-        return middleRow * SymbolConfig.symbolHeight + SymbolConfig.symbolHeight * 1.5;
+        const centreRow = (lowestRow + highestRow) / 2;
+
+        const { rows } = ReelsConfig;
+        const { symbolHeight } = SymbolConfig;
+        const middleRow = (rows + 1) / 2;
+
+        return (centreRow + 1 - middleRow) * symbolHeight;
     }
 }

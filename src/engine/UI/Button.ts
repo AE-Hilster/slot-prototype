@@ -1,31 +1,29 @@
 import * as PIXI from "pixi.js";
 import { gameComponents } from "../GameComponents";
 
-export class Button
+export class Button extends PIXI.Sprite
 {
-    private sprite: PIXI.Sprite;
-
     constructor(texture: PIXI.Texture)
     {
-        this.sprite = new PIXI.Sprite(texture);
-        this.sprite.x = gameComponents.app.screen.width / 2 - 50;
-        this.sprite.y = gameComponents.app.screen.height - 80;
-        this.sprite.anchor.set(0.5);
-        this.sprite.width = 100;
-        this.sprite.height = 100;
-        this.sprite.interactive = true;
+        super(texture);
+        this.x = gameComponents.app.screen.width / 2;
+        this.y = gameComponents.app.screen.height - 80;
+        this.anchor.set(0.5);
+        this.width = 100;
+        this.height = 100;
+        this.interactive = true;
 
-        gameComponents.app.stage.addChild(this.sprite);
+        gameComponents.app.stage.addChild(this);
     }
 
     onClick(callback: () => void): void
     {
-        this.sprite.on("pointerdown", callback);
+        this.on("pointerdown", callback);
     }
 
-    visible(state: boolean): void
+    setVisible(state: boolean): void
     {
-        this.sprite.visible = state;
-        this.sprite.interactive = state;
+        this.visible = state;
+        this.interactive = state;
     }
 }

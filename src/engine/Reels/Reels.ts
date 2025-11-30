@@ -2,19 +2,27 @@ import * as PIXI from "pixi.js";
 import { Reel } from "./Reel";
 import { Textures } from "../Textures";
 import { WinLine } from "../Data/WinLine";
+import { gameComponents } from "../GameComponents";
 
-export class Reels
+export class Reels extends PIXI.Container
 {
     private reels: Reel[] = [];
     public winlines: WinLine[] = [];
 
-    constructor(x: number, y: number, textures: Textures)
+    constructor(columns: number, rows: number, textures: Textures)
     {
-        for (let i = 0; i < x; ++i)
+        super();
+        for (let i = 0; i < columns; ++i)
         {
-            const reel = new Reel(i, y, textures);
+            const reel = new Reel(i, rows, textures);
             this.reels.push(reel);
+            this.addChild(reel);
         }
+
+        const { app } = gameComponents;
+        this.position.set(app.screen.width / 2, app.screen.height / 2);
+
+        app.stage.addChild(this);
     }
 
     update(delta: number): void

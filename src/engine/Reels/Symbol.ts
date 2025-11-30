@@ -1,42 +1,44 @@
 import * as PIXI from "pixi.js";
 import { gsap } from "gsap";
 import SymbolConfig from "../../config/symbol.json";
-import { gameComponents } from "../GameComponents";
+import ReelsConfig from "../../config/reels.json";
 
-export class Symbol
+export class Symbol extends PIXI.Sprite
 {
-    private sprite!: PIXI.Sprite;
-
     constructor(x: number, y: number, texture: PIXI.Texture)
     {
-        this.sprite = new PIXI.Sprite(texture);
-        this.sprite.anchor.set(0.5);
-        this.sprite.width = SymbolConfig.symbolWidth;
-        this.sprite.height = SymbolConfig.symbolHeight;
+        super(texture);
 
-        gameComponents.app.stage.addChild(this.sprite);
+        this.anchor.set(0.5);
+        this.width = SymbolConfig.symbolWidth;
+        this.height = SymbolConfig.symbolHeight;
         
         this.setPosition(x, y);
     }
 
     setPosition(x: number, y: number, offsetY?: number): void
     {
-        this.sprite.x = x * SymbolConfig.symbolWidth + SymbolConfig.symbolWidth / 2;
-        this.sprite.y = y * SymbolConfig.symbolHeight + SymbolConfig.symbolHeight / 2 + (offsetY ?? 0);
+        const { columns, rows } = ReelsConfig;
+        const { symbolWidth, symbolHeight } = SymbolConfig;
+        const middleColumn = (columns + 1) / 2;
+        const middleRow = (rows + 1) / 2;
+
+        this.x = (x + 1 - middleColumn) * symbolWidth;
+        this.y = (y - middleRow) * symbolHeight + (offsetY ?? 0);
     }
 
     setTexture(texture: PIXI.Texture): void
     {
-        this.sprite.texture = texture;
+        this.texture = texture;
     }
 
     setMask(mask: PIXI.Graphics): void
     {
-        this.sprite.mask = mask;
+        this.mask = mask;
     }
 
-    tint(colour: number): void
+    setTint(colour: number): void
     {
-        gsap.to(this.sprite, { pixi: { tint: colour }, duration: 0.25 });
+        gsap.to(this, { pixi: { tint: colour }, duration: 0.25 });
     }
 }
