@@ -111,6 +111,10 @@ function update(deltaTime: number): void
         changeGameState(GameState.SPINNING);
     });
 
+    window.addEventListener('resize', () => {
+        gameComponents.resizeComponents();
+    });
+
     changeGameState(GameState.IDLE);
 
     app.ticker.add((delta) => {

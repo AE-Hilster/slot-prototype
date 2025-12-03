@@ -20,9 +20,9 @@ export class Reels extends PIXI.Container
         }
 
         const { app } = gameComponents;
-        this.position.set(app.screen.width / 2, app.screen.height / 2);
-
         app.stage.addChild(this);
+
+        this.updatePosition();
     }
 
     update(delta: number): void
@@ -74,5 +74,17 @@ export class Reels extends PIXI.Container
             }
         }
         return false;
+    }
+
+    updatePosition(): void
+    {
+        const { app } = gameComponents;
+        this.position.set(app.screen.width / 2, app.screen.height / 2);
+        
+        // Update mask position for each reel
+        for (const reel of this.reels)
+        {
+            reel.updateMaskPosition();
+        }
     }
 }

@@ -7,6 +7,7 @@ import ReelConfig from "../../config/reels.json";
 export class Reel extends PIXI.Container
 {
     private reelIndex: number;
+    private reelLength: number;
 
     public spinning: boolean = false;
     private spinSpeed: number = 3;
@@ -27,15 +28,11 @@ export class Reel extends PIXI.Container
         super();
 
         this.reelIndex = reel;
+        this.reelLength = reelLength;
         this.textures = textures;
-        const { columns, rows } = ReelConfig;
-        const { symbolWidth, symbolHeight, symbolFiles } = SymbolConfig;
-        const middleColumn = (columns + 2) / 2;
-        const middleRow = rows / 2;
+        const { symbolFiles } = SymbolConfig;
 
         this.mask = new PIXI.Graphics();
-        this.mask.rect((reel + 1 - middleColumn) * symbolWidth, -middleRow * symbolHeight, symbolWidth, symbolHeight * reelLength)
-            .fill(0xFFFFFF);
         this.addChild(this.mask);
 
         for (let y = 0; y <= reelLength; ++y)
@@ -113,5 +110,17 @@ export class Reel extends PIXI.Container
         {
             symbol.setTint(0xFFFFFF);
         }
+    }
+
+    updateMaskPosition(): void
+    {
+        const { columns, rows } = ReelConfig;
+        const { symbolWidth, symbolHeight } = SymbolConfig;
+        const middleColumn = (columns + 2) / 2;
+        const middleRow = rows / 2;
+
+        this.mask.clear();
+        this.mask.rect((this.reelIndex + 1 - middleColumn) * symbolWidth, -middleRow * symbolHeight, symbolWidth, symbolHeight * this.reelLength)
+            .fill(0xFFFFFF);
     }
 }

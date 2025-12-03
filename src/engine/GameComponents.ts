@@ -94,6 +94,12 @@ class GameComponents {
         const result = this.getActiveResult()!;
         return result.winlines[this.winIndex];
     }
+
+    public resizeComponents(): void
+    {
+        this.reels.updatePosition();
+        this.spinButton.updatePosition();
+    }
 }
 
 // Export a singleton instance
