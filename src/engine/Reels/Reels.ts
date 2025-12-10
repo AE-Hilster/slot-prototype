@@ -1,20 +1,36 @@
 import * as PIXI from "pixi.js";
-import { Reel } from "./Reel";
-import { Textures } from "../Textures";
+import { Reel, ReelSpinStage } from "./Reel";
 import { WinLine } from "../Data/WinLine";
 import { gameComponents } from "../GameComponents";
+
+export interface ReelsConfig
+{
+    columns: number,
+    rows: number,
+    spinOffsets: number[],
+    spinStages: ReelSpinStage[]
+}
 
 export class Reels extends PIXI.Container
 {
     private reels: Reel[] = [];
+    private spinOffsets: number[] = [];
     public winlines: WinLine[] = [];
 
-    constructor(columns: number, rows: number, textures: Textures)
+    constructor(params: ReelsConfig)
     {
         super();
+
+        const { columns, rows, spinOffsets, spinStages } = params;
+        this.spinOffsets = spinOffsets;
+
         for (let i = 0; i < columns; ++i)
         {
-            const reel = new Reel(i, rows, textures);
+            const reel = new Reel({
+                index: i,
+                length: rows,
+                spinStages: spinStages
+            });
             this.reels.push(reel);
             this.addChild(reel);
         }
@@ -40,9 +56,10 @@ export class Reels extends PIXI.Container
 
     spin(result: number[][]): void
     {
-        for (let i = 0; i < this.reels.length; ++i)
+        const { reels, spinOffsets } = this;
+        for (let i = 0; i < reels.length; ++i)
         {
-            this.reels[i].spin(result[i]);
+            reels[i].spin(result[i], spinOffsets[i]);
         }
     }
 
@@ -81,7 +98,6 @@ export class Reels extends PIXI.Container
         const { app } = gameComponents;
         this.position.set(app.screen.width / 2, app.screen.height / 2);
         
-        // Update mask position for each reel
         for (const reel of this.reels)
         {
             reel.updateMaskPosition();

@@ -1,5 +1,6 @@
 {
     "rows": 3,
     "columns": 3,
-    "winLength": 1
+    "winLength": 1,
+    "spinOffsets": [0, 0.3, 0.5]
 }
