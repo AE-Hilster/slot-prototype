@@ -2,7 +2,8 @@ import * as PIXI from "pixi.js";
 
 /**
  * Texture manager
- * Provides centralized loading and access to textures
+ * Provides centralized loading and access to textures for symbols
+ * DEPRECATED AS OF SPINE SYMBOL IMPLEMENTATION
  */
 export class Textures
 {

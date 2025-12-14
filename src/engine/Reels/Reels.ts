@@ -17,16 +17,15 @@ export class Reels extends PIXI.Container
     private spinOffsets: number[] = [];
     public winlines: WinLine[] = [];
 
-    constructor(params: ReelsConfig)
+    async initialize(params: ReelsConfig): Promise<void>
     {
-        super();
-
         const { columns, rows, spinOffsets, spinStages } = params;
         this.spinOffsets = spinOffsets;
 
         for (let i = 0; i < columns; ++i)
         {
-            const reel = new Reel({
+            const reel = new Reel();
+            await reel.initialize({
                 index: i,
                 length: rows,
                 spinStages: spinStages

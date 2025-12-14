@@ -1,0 +1,62 @@
+{
+"skeleton": { "hash": "838pS64l3TM", "spine": "4.2.43", "x": -125, "y": -125, "width": 250, "height": 250 },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "symbol", "bone": "root", "attachment": "symbol" }
+],
+"skins": [
+	{
+		"name": "10",
+		"attachments": {
+			"symbol": {
+				"symbol": { "path": "10", "width": 250, "height": 250 }
+			}
+		}
+	},
+	{
+		"name": "ace",
+		"attachments": {
+			"symbol": {
+				"symbol": { "path": "ace", "width": 250, "height": 250 }
+			}
+		}
+	},
+	{
+		"name": "jack",
+		"attachments": {
+			"symbol": {
+				"symbol": { "path": "jack", "width": 250, "height": 250 }
+			}
+		}
+	},
+	{
+		"name": "king",
+		"attachments": {
+			"symbol": {
+				"symbol": { "path": "king", "width": 250, "height": 250 }
+			}
+		}
+	},
+	{
+		"name": "queen",
+		"attachments": {
+			"symbol": {
+				"symbol": { "path": "queen", "width": 250, "height": 250 }
+			}
+		}
+	},
+	{
+		"name": "wild",
+		"attachments": {
+			"symbol": {
+				"symbol": { "path": "wild", "width": 250, "height": 250 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {}
+}
+}

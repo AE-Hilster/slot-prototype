@@ -1,0 +1,16 @@
+symbols.png
+size:1514,254
+filter:Linear,Linear
+pma:true
+10
+bounds:2,2,250,250
+ace
+bounds:254,2,250,250
+jack
+bounds:506,2,250,250
+king
+bounds:758,2,250,250
+queen
+bounds:1010,2,250,250
+wild
+bounds:1262,2,250,250

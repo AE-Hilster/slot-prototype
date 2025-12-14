@@ -1,7 +1,6 @@
 import * as PIXI from "pixi.js";
 import { Reels } from "./Reels/Reels";
 import { WinLineText } from "./UI/WinLineText";
-import { Textures } from "./Textures";
 import { Button } from "./UI/Button";
 import { Result } from "./Data/Result";
 import { WinLine } from "./Data/WinLine";
@@ -13,7 +12,6 @@ import ReelsConfig from "../config/reels.json";
  */
 class GameComponents {
     public app!: PIXI.Application<PIXI.Renderer>;
-    public textures!: Textures;
     public reels!: Reels;
     public winLineText!: WinLineText;
     public spinButton!: Button;
@@ -37,11 +35,6 @@ class GameComponents {
     public setWinLineText(winLineText: WinLineText): void
     {
         this.winLineText = winLineText;
-    }
-
-    public setTextures(textures: Textures): void
-    {
-        this.textures = textures;
     }
 
     public setSpinButton(spinButton: Button): void

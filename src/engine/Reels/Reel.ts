@@ -22,8 +22,8 @@ export class Reel extends PIXI.Container
 {
     private spinStages: ReelSpinStage[] = [];
 
-    private reelIndex: number;
-    private reelLength: number;
+    private reelIndex!: number;
+    private reelLength!: number;
 
     public spinning: boolean = false;
     private spinDelay: number = 0;
@@ -33,16 +33,13 @@ export class Reel extends PIXI.Container
 
     private yOffset: number = 0;
     public symbols: Symbol[] = [];
-    public mask: PIXI.Graphics;
+    public mask!: PIXI.Graphics;
 
     private result: number[] = [];
 
-    constructor(params: ReelConfig)
+    async initialize(params: ReelConfig): Promise<void>
     {
-        super();
-
         const { index, length, spinStages } = params;
-        const { symbolFiles } = SymbolConfig;
         this.reelIndex = index;
         this.reelLength = length;
         this.spinStages = spinStages;
@@ -52,7 +49,8 @@ export class Reel extends PIXI.Container
 
         for (let y = 0; y <= length + 1; ++y)
         {
-            const symbol = new Symbol(index, y, gameComponents.textures.getTexture(Math.floor(Math.random() * symbolFiles.length)));
+            const symbol = new Symbol();
+            await symbol.initialize(index, y, "symbols");
             symbol.setMask(this.mask);
             this.symbols.push(symbol);
             this.addChild(symbol);
@@ -90,8 +88,8 @@ export class Reel extends PIXI.Container
                     }
 
                     const resetSymbol = this.symbols.pop()!
-                    const newSymbolIndex = landResult && continueSpin ? this.result.pop()! : Math.floor(Math.random() * SymbolConfig.symbolFiles.length);
-                    resetSymbol.setTexture(gameComponents.textures.getTexture(newSymbolIndex));
+                    const newSymbolIndex = landResult && continueSpin ? this.result.pop()! : Math.floor(Math.random() * SymbolConfig.symbolSkins.length);
+                    resetSymbol.setSkin(SymbolConfig.symbolSkins[newSymbolIndex]);
                     symbols.unshift(resetSymbol);
                 }
 

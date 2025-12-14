@@ -1,9 +1,7 @@
 import * as PIXI from "pixi.js";
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
-import SymbolConfig from "./config/symbol.json";
 import ReelsConfig from "./config/reels.json";
-import { Textures } from "./engine/Textures";
 import { Button } from "./engine/UI/Button";
 import { Reels } from "./engine/Reels/Reels";
 import { Result } from "./engine/Data/Result";
@@ -38,11 +36,8 @@ const debug = false;
     const winLineText = new WinLineText();
     gameComponents.setWinLineText(winLineText);
 
-    const textures = new Textures();
-    await textures.init(SymbolConfig.symbolFiles);
-    gameComponents.setTextures(textures);
-
-    const reels = new Reels({
+    const reels = new Reels();
+    await reels.initialize({
         columns: ReelsConfig.columns,
         rows: ReelsConfig.rows,
         spinOffsets: ReelsConfig.spinOffsets,

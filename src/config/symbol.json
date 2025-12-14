@@ -1,12 +1,12 @@
 {
-    "symbolFiles":
+    "symbolSkins":
     [
-        "10.jpg",
-        "jack.jpg",
-        "queen.jpg",
-        "king.jpg",
-        "ace.jpg",
-        "wild.jpg"
+        "10",
+        "jack",
+        "queen",
+        "king",
+        "ace",
+        "wild"
     ],
     "symbolWidth": 250,
     "symbolHeight": 250

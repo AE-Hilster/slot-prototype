@@ -1,20 +1,18 @@
 import * as PIXI from "pixi.js";
 import { gsap } from "gsap";
-import { Spine } from "../Spine";
 import SymbolConfig from "../../config/symbol.json";
 import ReelsConfig from "../../config/reels.json";
 
-export class Symbol extends PIXI.Container
+/**
+ * DEPRECATED AS OF SPINE SYMBOL IMPLEMENTATION
+ */
+export class Symbol extends PIXI.Sprite
 {
-    private spine!: Spine;
-
-    async initialize(x: number, y: number, spineData: string): Promise<void>
+    constructor(x: number, y: number, texture: PIXI.Texture)
     {
-        this.spine = new Spine();
-        await this.spine.initialize(spineData);
-        this.addChild(this.spine.spine);
-        this.setSkin(SymbolConfig.symbolSkins[Math.floor(Math.random() * SymbolConfig.symbolSkins.length)]);
+        super(texture);
 
+        this.anchor.set(0.5);
         this.width = SymbolConfig.symbolWidth;
         this.height = SymbolConfig.symbolHeight;
         
@@ -32,9 +30,9 @@ export class Symbol extends PIXI.Container
         this.y = (y - middleRow) * symbolHeight + (offsetY ?? 0);
     }
 
-    setSkin(skinName: string): void
+    setTexture(texture: PIXI.Texture): void
     {
-        this.spine.setSkin(skinName);
+        this.texture = texture;
     }
 
     setMask(mask: PIXI.Graphics): void
@@ -44,6 +42,6 @@ export class Symbol extends PIXI.Container
 
     setTint(colour: number): void
     {
-        gsap.to(this.spine.spine, { pixi: { tint: colour }, duration: 0.25 });
+        gsap.to(this, { pixi: { tint: colour }, duration: 0.25 });
     }
 }
